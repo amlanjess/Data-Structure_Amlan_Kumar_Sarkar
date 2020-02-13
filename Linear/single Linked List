@@ -1,0 +1,316 @@
+//Linear/single Linked List
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+using namespace std;
+
+typedef struct l_list
+{
+   int info;
+   struct l_list *link;
+}node;
+node *head,*last;
+
+//empty List
+void empty_list()
+{
+  head= NULL;
+}
+//insert value funtion
+void ins_item()
+{
+   int item;
+   node *ptr = (node*) malloc(sizeof(node));
+   cout<<"Enter the value For List: ";
+   cin>>ptr->info;
+
+	if(head==NULL)
+	{
+	   head = last = ptr;
+	}
+	else
+	{
+	  last->link=ptr;
+	  last = ptr;
+	}
+	ptr->link=NULL;
+}
+
+//Insert the value from beginig
+void ins_beg()
+{
+	node *ptr;
+	ptr=(node*)malloc(sizeof(node));
+	
+	cout<<"Enter the value to insert at 1st Possition: ";
+	cin>>ptr->info;
+	
+	if(head==NULL)
+	{
+		head=ptr;
+		ptr->link=NULL;
+	}
+	else
+	{
+		ptr->link=head;
+		head=ptr;
+	}
+}
+
+//insert at end
+void ins_end(int item)
+{
+	node *ptr,*loc=head;
+	ptr=(node*)malloc(sizeof(node));
+	
+	ptr->info=item;
+	
+	if(head==NULL)
+	{
+		head=ptr;
+		ptr->link=NULL;
+	}
+	else
+	{
+			while(loc->link!=NULL)
+			{
+				loc=loc->link;
+			}
+			loc->link = ptr;
+			ptr->link=NULL;
+	}
+}
+
+
+//traverse in list
+void traverse()
+{
+  node *ptr=head;
+
+	cout<<endl<<"************"<<endl<<"List Values Are: ";
+
+	if(head==NULL)
+	{
+		cout<<endl<<"List Is Empty:";
+	}
+	else
+	{
+		while(ptr!=NULL)
+		{
+		   cout<<endl<<ptr->info;
+		   ptr=ptr->link;
+		}
+	}
+}
+
+node* search(int item)
+{
+   node *ptr=head;
+
+     while(ptr != NULL)
+     {
+       if(item == ptr->info)
+       {
+	  return(ptr);
+       }
+       ptr=ptr->link;
+     }
+   return(NULL);
+}
+
+//insert a node after the given value
+void ins_after(int after,int item)
+{
+	node *ptr,*loc;
+	ptr=(node*)malloc(sizeof(node));
+	
+	ptr->info=item;
+	
+	loc=search(after);
+	
+		if(loc==NULL)
+		{
+			cout<<"Value Not Found ";	
+		}	
+		else if(loc->link==NULL)
+		{
+			ins_end(item);
+		}
+		else
+		{
+			ptr->link=loc->link;
+			loc->link=ptr;
+		}
+	
+}
+
+//Delete from Begining
+void del_beg()
+{
+	node *ptr;
+	
+	if(head==NULL)
+	{
+		cout<<"List Is Empty";
+	}
+	else
+	{
+		ptr=head;
+		head=ptr->link;
+		free(ptr);
+	}
+}
+
+//Delete from End
+void del_end()
+{
+	node *ptr,*loc;
+	
+	if(head==NULL)
+	{
+		cout<<"List is Empty";
+	}
+	else if(head->link==NULL)
+	{
+		free(head);
+		head=NULL;
+	}
+	else
+	{
+		loc = head;
+		while(loc->link != NULL)
+		{
+			
+			ptr=loc;
+			loc=loc->link;
+		}
+		ptr->link=NULL;
+		free(loc);
+	}
+	
+}
+
+//Delete afeter the node
+void del_after(int after)
+{
+	node *ptr,*loc;
+	
+	ptr=search(after);
+	
+	if(ptr==NULL)
+	{
+		cout<<"Macth NOt Found";
+	}
+	else if(ptr->link==NULL)
+	{
+		cout<<"Its Last Node Delete Not Possibe";
+	}
+	else
+	{
+		loc=ptr->link;
+		ptr->link=loc->link;
+		free(loc);	
+	}
+	
+}
+
+//free the space
+void free()
+{
+	node *ptr;
+		while(head!=NULL)
+		{
+			ptr=head;
+			head=ptr->link;
+			free(ptr);
+		}
+}
+int main()
+{
+int sw;
+	empty_list();
+
+	do
+	{
+	  cout<<endl<<endl<<"***************************"<<endl;
+	  cout<<"1> To insert value"<<endl<<"2> To view/traverse the Linked list"<<endl;
+	  cout<<"3> To Search Value"<<endl<<"4> Insert At Begining"<<endl;
+	  cout<<"5> Insert At END"<<endl<<"6> Insert node after value"<<endl;
+	  cout<<"7> Delete From Begining"<<endl<<"8> Delete From End"<<endl;
+	  cout<<"9> Delete After the Node"<<endl<<"10> Free Memory"<<endl;
+	  cout<<"11> EXIT";
+	  cout<<endl<<"***************************"<<endl;
+	  cout<<"press The Key: ";
+	  cin>>sw;
+	  switch(sw)
+	  {
+	    default:
+		     cout<<endl<<"Wrong Input";
+		     break;
+	    case 11:
+		     break;
+	    case 1:
+		    ins_item();
+		    break;
+	    case 2:
+		    traverse();
+		    break;
+	    case 3:
+		    int sr;
+		    node *ptr;
+		    cout<<endl<<"Enter the item for Search: ";
+		    cin>>sr;
+			ptr=search(sr);
+			cout<<endl;
+			if(ptr==NULL)
+			{
+			    cout<<"Value Not Found: "<<endl;
+			}
+			else
+			{
+			    cout<<"Match Found: "<< ptr->info;
+			}
+			break;
+		case 4:
+			ins_beg();
+			break;
+		case 5:
+			{
+				int item;
+				cout<<"Enter the Iteam Value: ";
+				cin>>item;
+				ins_end(item);
+				break;
+		    }
+		case 6:
+			{		
+				int after,item;
+				cout<<"Enter the Iteam Value: ";
+				cin>>item;
+				cout<<"Enter the node value you want to search: ";
+				cin>>after;
+				ins_after(after,item);
+				break;
+			}
+		case 7:
+			del_beg();
+			break;
+		case 8:
+			del_end();
+			break;
+		case 9:
+			{
+				int after;
+				cout<<"Enter the value for search: ";
+				cin>>after;
+				del_after(after);
+				break;
+		    }
+		case 10:
+			free();
+			break;
+
+	  }//end of switch
+	}while(sw!=11);
+
+}
