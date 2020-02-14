@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+void create(int);
+void delete_item();
+struct node
+{
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+struct node *head;
+void main ()
+{
+    int choice,item;
+    do
+    {
+        printf("1.Create List\n2.Delete node\n3.Exit\n4.Sum of nodes multiplied by 5:\n5.Enter your choice?\n\n");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            printf("\nEnter the item\n");
+            scanf("%d",&item);
+            create(item);
+            break;
+            case 2:
+            delete_item();
+            break;
+            case 3:
+            exit(0);
+            break;
+            case 4:
+                do
+                {
+                    int number=0,n,p,q;
+                    scanf("%d%d",&p,&q);
+                    number=number+item;
+                    n=p+q;
+                    printf("\nSum of the numbers are:%d\n",n);
+                }while(item%5==0);
+            default:
+            printf("\nPlease enter valid choice\n");
+        }
+
+    }while(choice!=3);
+}
+void create(int item)
+{
+   struct node*ptr=(struct node*)malloc(sizeof(struct node));
+   if(ptr == NULL)
+   {
+       printf("\nEnd of list.\n");
+   }
+   else
+   {
+   if(head==NULL)
+   {
+       ptr->next = NULL;
+       ptr->prev=NULL;
+       ptr->data=item;
+       head=ptr;
+   }
+   else
+   {
+       ptr->data=item;
+       ptr->prev=NULL;
+       ptr->next = head;
+       head->prev=ptr;
+       head=ptr;
+   }
+    printf("\nNode Inserted\n");
+}
+
+}
+void delete_item()
+{
+    struct node *ptr, *loc;
+    int value;
+    printf("\nEnter the value\n\n");
+    scanf("%d",&value);
+    loc=head;
+    while(loc->data!=value)
+    loc=loc->next;
+    if(loc->next==NULL)
+    {
+        printf("\nCan't delete\n");
+    }
+    else if(loc->next->next==NULL)
+    {
+        loc->next=NULL;
+        printf("\nNode Deleted\n");
+    }
+    else
+    {
+        ptr=loc->next;
+        loc->next=ptr->next;
+        ptr->next->prev=loc;
+        free(ptr);
+        printf("\nNode Deleted\n");
+    }
+}
+
