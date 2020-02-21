@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<conio.h>
+
+int array[10],choice,x,i,n,top;
+void push(void);
+void pop(void);
+void display(void);
+
+int main()
+{
+    top=-1;
+    printf("Enter the size of the Array:\n");
+    scanf("%d",&n);
+    printf("Select the options from the list below:\n");
+    printf("\t1.push\t2.pop\t3.display\t4.exit\n");
+    do
+    {
+        printf("\nEnter the choice.\n");
+        scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+        {
+            push();
+            break;
+        }
+        case 2:
+        {
+            pop();
+            break;
+        }
+        case 3:
+        {
+            display();
+            break;
+        }
+        case 4:
+        {
+            printf("Exit the program\n");
+            break;
+        }
+        default:
+        {
+            printf("\nEnter the right choice to pick up the option\n");
+        }
+    }
+
+    }
+    while(choice!=4);
+    return 0;
+}
+
+void push()
+{
+    if(top>=n-1)
+    {
+        printf("\nStack Overflow\n");
+    }
+    else
+    {
+        printf("Please enter push elements\n");
+        scanf("%d",&x);
+        top++;
+        array[top]=x;
+    }
+}
+void pop()
+{
+    if(top<=-1)
+    {
+        printf("\nStack Underflow\n");
+    }
+    else
+    {
+        printf("The poped elements is:%d",array[top]);
+        top--;
+    }
+}
+void display()
+{
+    if(top>=0)
+    {
+        printf("The elements available in stack is:\n");
+        for(i=top;i>=0;i--)
+    {
+        printf("%d  ",array[i]);
+    }
+    printf("\nPress the next choice.\n");
+    }
+}
