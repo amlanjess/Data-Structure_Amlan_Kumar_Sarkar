@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<conio.h>
+
+struct Node
+{
+   int item;
+   struct Node *next;
+}*front = NULL,*rear = NULL;
+
+void insert(int);
+void delete();
+void display();
+
+int main()
+{
+   int choice=1, value;
+   printf("\nImplementation of queue by Linked List...\n");
+   while(choice){
+      printf("\n1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+      printf("\nEnter your choice: ");
+      scanf("%d",&choice);
+
+     switch(choice){
+	 case 1: printf("Enter the value to be insert: ");
+		 scanf("%d", &value);
+		 insert(value);
+		 break;
+	 case 2:
+	     delete();
+	     break;
+	 case 3:
+	     display();
+	     break;
+	 case 4:
+	     exit(0);
+	 default:
+	     printf("\nPlaese choose the correct input...\n");
+      }
+   }
+   return 0;
+}
+void insert(int value)
+{
+   struct Node *newNode;
+   newNode = (struct Node*)malloc(sizeof(struct Node));
+   newNode->item = value;
+   newNode -> next = NULL;
+   if(front == NULL)
+      front = rear = newNode;
+   else{
+      rear -> next = newNode;
+      rear = newNode;
+   }
+   printf("\nInserted....\n");
+}
+void delete()
+{
+   if(front == NULL)
+      printf("\nQueue is Empty!!!\n");
+   else{
+      struct Node *temp = front;
+      front = front -> next;
+      printf("\nDeleted element: %d\n", temp->item);
+      free(temp);
+   }
+}
+void display()
+{
+   if(front == NULL)
+      printf("\nQueue is Empty!!!\n");
+   else{
+      struct Node *temp = front;
+      while(temp->next != NULL){
+	 printf("%d--->",temp->item);
+	 temp = temp -> next;
+      }
+      printf("%d--->NULL\n",temp->item);
+   }
+}
