@@ -10,7 +10,10 @@ int main()
   printf("Enter %d integers\n", n);
 
   for (c = 0; c < n; c++)
-    scanf("%d", &array[c]);
+  {
+  printf("Elements are:%d:",c);
+  scanf("%d", &array[c]);
+  }
 
   for (c = 1 ; c <= n - 1; c++) {
     t = array[c];
