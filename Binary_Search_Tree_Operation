@@ -1,0 +1,124 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct mynode
+{
+    int item;
+    struct mynode *left;
+    struct mynode *right;
+}*root = NULL,*temp=NULL;
+
+void insert();
+void create();
+void search(struct mynode *p);
+void inorder(struct mynode *p);
+void preorder(struct mynode *p);
+void postorder(struct mynode *p);
+
+int flag=1;
+
+void main()
+{
+    int choice;
+    printf("\nBinary Search Tree Operations:");
+    printf("\n1. Insert Element:\n");
+    printf("2. Inorder Traversal\n");
+    printf("3. Preorder Traversal\n");
+    printf("4. Postorder Traversal\n");
+    printf("5. Exit\n");
+    while(1)
+    {
+        printf("\nEnter Choice from the list: ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+        case 1:
+            insert();
+            break;
+        case 2:
+            inorder(root);
+            break;
+        case 3:
+            preorder(root);
+            break;
+        case 4:
+            postorder(root);
+            break;
+        case 5:
+            exit(0);
+        default :
+            printf("Please Enter Correct Choice:  ");
+            break;
+        }
+    }
+}
+void insert()
+{
+    create();
+    if(root==NULL)
+        root=temp;
+    else
+        search(root);
+}
+
+void create()
+{
+    int data;
+    printf("Enter Inserted Data: ");
+    scanf("%d",&data);
+    root=(struct mynode*)malloc(1*sizeof(struct mynode));
+    root->item=data;
+    root->left=root->right=NULL;
+}
+
+void search(struct mynode *p)
+{
+    if((temp->item>p->item)&& (p->right!=NULL))
+        search(p->right);
+    else if((temp->item>p->item)&&(p->right==NULL))
+        p->right=temp;
+    else if((temp->item<p->item)&&(p->left!=NULL))
+        search(p->left);
+    else if((temp->item<p->item)&&(p->left==NULL))
+        p->left=temp;
+}
+
+void inorder(struct mynode *p)
+{
+    if(root==NULL)
+    {
+        printf("Elements arn't available to display...");
+        return;
+    }
+    if (p->left!=NULL)
+        inorder(p->left);
+    printf("%d->",p->item);
+    if (p->right!=NULL)
+        inorder(p->right);
+}
+void preorder(struct mynode *p)
+{
+    if (root==NULL)
+    {
+        printf("Elements arn't available to display...");
+        return;
+    }
+    printf("%d->",p->item);
+    if (p->left!=NULL)
+        preorder(p->left);
+    if (p->right!=NULL)
+        preorder(p->right);
+}
+void postorder(struct mynode *p)
+{
+    if (root==NULL)
+    {
+        printf("Elements arn't available to display...");
+        return;
+    }
+    if (p->left!=NULL)
+        postorder(p->left);
+    if (p->right!=NULL)
+        postorder(p->right);
+    printf("%d->",p->item);
+}
